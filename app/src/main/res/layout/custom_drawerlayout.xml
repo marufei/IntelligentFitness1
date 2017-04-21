@@ -4,24 +4,168 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--主布局-->
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fl_drawerlayout_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff0">
-
-    </LinearLayout>
+        android:background="#ffff">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:text="首页"
+            android:gravity="center"
+            />
+    </FrameLayout>
     <!--侧滑菜单-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#fff">
-
-        <ListView
-            android:id="@+id/lv_left_menu"
+        android:background="#fff"
+        android:orientation="vertical">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:text="DrawerLayout" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/backcolor">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:id="@+id/iv_drawerlayout_header"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:src="@drawable/vector_drawable_header" />
+
+                        <TextView
+                            android:id="@+id/tv_drawerlayout_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="14sp"
+                            android:lines="1"
+                            android:text="用户名"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_drawerlayout_health"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:text="健身资讯"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/vector_drawable_arrow_next" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_white"/>
+                <RelativeLayout
+                    android:id="@+id/rl_drawerlayout_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:text="每日计划"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/vector_drawable_arrow_next" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_white"/>
+                <RelativeLayout
+                    android:id="@+id/rl_drawerlayout_evaluate"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:text="评估报告"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/vector_drawable_arrow_next" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_white"/>
+                <RelativeLayout
+                    android:id="@+id/rl_evaluate_persional"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:text="个人信息"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/vector_drawable_arrow_next" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_white"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
