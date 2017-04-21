@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.health.demo.intelligentfitness.EditNameActivity">
+    <include layout="@layout/custom_toolbar"/>
+    <EditText
+        android:id="@+id/et_edit_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:lines="1"
+        android:background="@null"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:hint="请输入名称"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray"/>
+    <TextView
+        android:id="@+id/tv_edit_name_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_select"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="确定"/>
+</LinearLayout>
