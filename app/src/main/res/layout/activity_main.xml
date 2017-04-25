@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.health.demo.intelligentfitness.MainActivity">
     <!--Toolbar-->
-    <include layout="@layout/custom_toolbar" />
+    <include layout="@layout/custom_toolbar1" />
     <!--DrawerLayout-->
     <include layout="@layout/custom_drawerlayout" />
 </LinearLayout>

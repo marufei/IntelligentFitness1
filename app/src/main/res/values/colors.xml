@@ -67,4 +67,6 @@
     <color name="buy_vip_n">#EEEEEE</color>
     <color name="navpage">#FFE1E8EB</color>
     <color name="tm">#00000000</color>
+    <color name="yellow">#fd9c06</color>
+    <color name="grey">#BDBDBD</color>
 </resources>

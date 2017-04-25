@@ -1,32 +1,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.health.demo.intelligentfitness.fragment.HealthFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/iv_health_header"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@mipmap/health_banner"
-        android:scaleType="fitXY"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="热门资讯"
-        android:textColor="@color/black"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_white"/>
-    <ListView
-        android:id="@+id/lv_health_show"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/tv_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@mipmap/home_statistical"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="查看历史步数"
+            android:textColor="#333333" />
+
+        <com.health.demo.intelligentfitness.view.StepArcView
+            android:id="@+id/cc"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/tv_data"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp" />
+
+        <TextView
+            android:id="@+id/tv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/cc"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:drawableLeft="@mipmap/home_question_mark"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="设置锻炼计划"
+            android:textColor="#333333" />
+
+        <TextView
+            android:id="@+id/tv_isSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cc"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:text="该设备?支持计步"
+            android:textColor="#333333" />
+
+    </RelativeLayout>
 
 </LinearLayout>
