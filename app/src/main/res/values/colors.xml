@@ -69,4 +69,6 @@
     <color name="tm">#00000000</color>
     <color name="yellow">#fd9c06</color>
     <color name="grey">#BDBDBD</color>
+    <color name="gray_6">#666666</color>
+    <color name="gray_9">#999999</color>
 </resources>

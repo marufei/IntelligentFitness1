@@ -35,20 +35,19 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp">
-        <TextView
-            android:id="@+id/tv_register_regcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取验证码"
+        <ImageView
+            android:id="@+id/iv_register_regcode"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="12sp"/>
+            android:scaleType="fitXY"/>
         <EditText
             android:id="@+id/et_register_regcode"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_toLeftOf="@+id/tv_register_regcode"
+            android:layout_toLeftOf="@+id/iv_register_regcode"
             android:hint="验证码"
             android:textSize="14sp"
             android:lines="1"
@@ -72,7 +71,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:hint="密码"
+        android:hint="密码(6-20位)"
         android:lines="1"
         android:textColor="@color/black"
         android:textColorHint="@color/text_back_gray"
@@ -87,9 +86,10 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"/>
     <TextView
+        android:id="@+id/tv_register_reg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="注册"
+        android:text="下一步"
         android:layout_marginTop="50dp"
         android:textColor="@color/white"
         android:gravity="center"
@@ -97,6 +97,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/button_select"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

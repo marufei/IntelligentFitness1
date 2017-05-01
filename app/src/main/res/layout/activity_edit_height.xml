@@ -12,7 +12,7 @@
         android:id="@+id/et_edit_height_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入新密码"
+        android:hint="请输入身高"
         android:inputType="numberDecimal"
         android:maxLength="5"
         android:textSize="14sp"

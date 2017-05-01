@@ -50,8 +50,9 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="5dp"
         android:background="@color/gray"/>
+
     <TextView
-        android:id="@+id/tv_login_login"
+        android:id="@+id/tv_forgetpwd2_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
