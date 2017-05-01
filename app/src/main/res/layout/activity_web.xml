@@ -8,7 +8,7 @@
     tools:context="com.health.demo.intelligentfitness.WebActivity">
     <include layout="@layout/custom_toolbar"/>
     <WebView
-        android:id="@+id/wv_"
+        android:id="@+id/wv_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></WebView>
 </LinearLayout>

@@ -1,25 +1,39 @@
 package com.health.demo.intelligentfitness;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
 
 import com.health.demo.intelligentfitness.util.MyUtils;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class WebActivity extends AppCompatActivity {
 
+    @InjectView(R.id.tl_custom)
+    Toolbar tlCustom;
+    @InjectView(R.id.wv_show)
+    WebView wvShow;
+    @InjectView(R.id.activity_web)
+    LinearLayout activityWeb;
     private String urlShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        Intent intent=getIntent();
-        urlShow=intent.getStringExtra("url");
-        if(!TextUtils.isEmpty(urlShow)) {
+        ButterKnife.inject(this);
+        Intent intent = getIntent();
+        urlShow = intent.getStringExtra("url");
+        if (!TextUtils.isEmpty(urlShow)) {
             initData();
         }
     }
@@ -27,7 +41,7 @@ public class WebActivity extends AppCompatActivity {
     private void initData() {
 
         MyUtils.Loge("aaa", "改后----urlShow::" + urlShow);
-        WebSettings webSettings = wv_show.getSettings();
+        WebSettings webSettings = wvShow.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
 
@@ -42,8 +56,14 @@ public class WebActivity extends AppCompatActivity {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setDomStorageEnabled(true);//启用Dom内存（不加就显示不出来）
-        wv_show.setWebChromeClient(new WebChromeClient());
+        wvShow.setWebChromeClient(new WebChromeClient());
 //        加载需要显示的网页
-        wv_show.loadUrl(urlShow);
+        wvShow.loadUrl(urlShow);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wvShow.setVisibility(View.GONE);//ZoomButtonsController有一个register和unregister的过程
+//        wv_show.destroy();
     }
 }
