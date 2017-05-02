@@ -9,13 +9,36 @@
     tools:context="com.health.demo.intelligentfitness.EditPwdActivity">
     <include layout="@layout/custom_toolbar"/>
     <EditText
-        android:id="@+id/et_edit_pwd_edit"
+        android:id="@+id/et_edit_pwd_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入新密码"
+        android:hint="请输入旧密码(6~20)"
+        android:inputType="textPassword"
+        android:maxLength="20"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:background="@null"
+        android:lines="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray"/>
+    <EditText
+        android:id="@+id/et_edit_pwd_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入新密码(6~20)"
         android:inputType="textPassword"
         android:textSize="14sp"
         android:layout_marginLeft="20dp"
+        android:maxLength="20"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
         android:textColor="@color/black"

@@ -24,6 +24,14 @@ public class ApiAddress {
      * 列表资讯
      */
     public static String NEWS_LIST="informs";
+    /**
+     * 修改个人信息
+     */
+    public static String EDIT_INFO="user-info";
+    /**
+     * 修改密码
+     */
+    public static String EDIT_PWD="password/update";
     public static String getURL(String str) {
         String url = API + str;
         return url;

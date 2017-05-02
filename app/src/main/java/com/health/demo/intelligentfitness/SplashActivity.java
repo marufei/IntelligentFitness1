@@ -1,11 +1,14 @@
 package com.health.demo.intelligentfitness;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.health.demo.intelligentfitness.util.MySharedPrefrencesUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,6 +20,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ivSplashBg=(ImageView)findViewById(R.id.iv_splash_bg);
-        Glide.with(this).load("http://s1.dwstatic.com/group1/M00/E5/B1/4c0df482fef1bccac8f242d37445c8f4.gif").into(ivSplashBg);
+        Glide.with(this).load(R.mipmap.back).into(ivSplashBg);
+        if(TextUtils.isEmpty((String) MySharedPrefrencesUtil.getParam(this,"token",""))){
+            startActivity(new Intent(this,LoginActivity.class));
+            finish();
+        }else {
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }
     }
 }

@@ -16,7 +16,7 @@ import com.health.demo.intelligentfitness.util.MyUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class WebActivity extends AppCompatActivity {
+public class WebActivity extends BaseActivity {
 
     @InjectView(R.id.tl_custom)
     Toolbar tlCustom;
@@ -31,6 +31,7 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.inject(this);
+        initToolbar("资讯详情");
         Intent intent = getIntent();
         urlShow = intent.getStringExtra("url");
         if (!TextUtils.isEmpty(urlShow)) {
@@ -64,6 +65,5 @@ public class WebActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         wvShow.setVisibility(View.GONE);//ZoomButtonsController有一个register和unregister的过程
-//        wv_show.destroy();
     }
 }

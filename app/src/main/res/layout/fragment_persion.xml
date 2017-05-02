@@ -37,6 +37,7 @@
                 android:id="@+id/textView2" />
 
             <TextView
+                android:id="@+id/tv_info_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -64,6 +65,7 @@
                 android:textColor= "@color/black"
                 android:text="修改昵称"/>
             <TextView
+                android:id="@+id/tv_info_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -129,6 +131,7 @@
                 android:textColor= "@color/black"
                 android:text="修改身高"/>
             <TextView
+                android:id="@+id/tv_info_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -166,6 +169,7 @@
                 android:textColor= "@color/black"
                 android:text="修改体重"/>
             <TextView
+                android:id="@+id/tv_info_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

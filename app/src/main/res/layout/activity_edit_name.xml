@@ -16,6 +16,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
         android:lines="1"
+        android:maxLength="10"
         android:background="@null"
         android:textColorHint="@color/gray"
         android:textColor="@color/black"
