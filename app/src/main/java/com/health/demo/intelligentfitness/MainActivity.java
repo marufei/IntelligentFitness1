@@ -114,7 +114,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tv_first:
                 mDrawerLayout.closeDrawers();
-                Toast.makeText(MainActivity.this,"点击了首页",Toast.LENGTH_LONG).show();
                 FragmentManager fragmentManager4=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction4=fragmentManager4.beginTransaction();
                 HomeFragment homeFragment=new HomeFragment();

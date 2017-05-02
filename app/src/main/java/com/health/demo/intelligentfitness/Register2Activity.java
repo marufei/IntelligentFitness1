@@ -2,6 +2,7 @@ package com.health.demo.intelligentfitness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -9,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -26,57 +26,67 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class ForgetPwd2Activity extends BaseActivity {
+public class Register2Activity extends BaseActivity {
 
     @InjectView(R.id.tl_custom)
     Toolbar tlCustom;
-    @InjectView(R.id.et_forgetpwd2_pwd1)
-    EditText etForgetpwd2Pwd1;
-    @InjectView(R.id.et_forgetpwd2_pwd2)
-    EditText etForgetpwd2Pwd2;
-    @InjectView(R.id.tv_forgetpwd2_login)
-    TextView tvForgetpwd2Login;
-    @InjectView(R.id.activity_forget_pwd2)
-    LinearLayout activityForgetPwd2;
+    @InjectView(R.id.et_reg_height)
+    EditText etRegHeight;
+    @InjectView(R.id.et_reg_weight)
+    EditText etRegWeight;
+    @InjectView(R.id.tv_edit_sure)
+    TextView tvEditSure;
+    @InjectView(R.id.activity_register2)
+    LinearLayout activityRegister2;
     private String phone;
+    private String pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_pwd2);
+        setContentView(R.layout.activity_register2);
         ButterKnife.inject(this);
-        initToolbar("设置密码");
+        initToolbar("注册");
         initData();
     }
 
+    /**
+     * 接收数据
+     */
     private void initData() {
         Intent intent=getIntent();
         phone=intent.getStringExtra("phone");
+        pwd=intent.getStringExtra("pwd");
     }
 
-    @OnClick(R.id.tv_forgetpwd2_login)
+
+    @OnClick(R.id.tv_edit_sure)
     public void onViewClicked() {
-        if(TextUtils.isEmpty(etForgetpwd2Pwd1.getText().toString().trim())||TextUtils.isEmpty(etForgetpwd2Pwd2.getText().toString().trim())){
-            MyUtils.showToast(ForgetPwd2Activity.this,"两次密码不能为空");
+        if(TextUtils.isEmpty(etRegHeight.getText().toString().trim())){
+            MyUtils.showToast(Register2Activity.this,"请完善身高信息");
             return;
         }
-        if(!MyUtils.isPassword(etForgetpwd2Pwd1.getText().toString().trim())||!MyUtils.isPassword(etForgetpwd2Pwd2.getText().toString().trim())){
-            MyUtils.showToast(ForgetPwd2Activity.this,"密码格式不正确");
+        if(TextUtils.isEmpty(etRegWeight.getText().toString().trim())){
+            MyUtils.showToast(Register2Activity.this,"请完善体重信息");
             return;
         }
-        if(!etForgetpwd2Pwd1.getText().toString().trim().equals(etForgetpwd2Pwd2.getText().toString().trim())){
-            MyUtils.showToast(ForgetPwd2Activity.this,"两次密码不一致");
+        if(Double.valueOf(etRegHeight.getText().toString().trim())>250.0){
+            MyUtils.showToast(Register2Activity.this,"身高最大不能超过250.0");
             return;
         }
-        resetPWD();
+        if(Double.valueOf(etRegWeight.getText().toString().trim())>250.0){
+            MyUtils.showToast(Register2Activity.this,"体重最大不能超过250.0");
+            return;
+        }
+        register();
     }
 
     /**
-     * 重置密码
+     * 注册
      */
-    private void resetPWD() {
-        MyUtils.showDialog(ForgetPwd2Activity.this,"重置密码中...");
-        String url= ApiAddress.getURL(ApiAddress.RET_PWD);
+    private void register() {
+        MyUtils.showDialog(Register2Activity.this,"注册中...");
+        String url= ApiAddress.getURL(ApiAddress.REGISTER);
         StringRequest stringRequest=new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -87,31 +97,32 @@ public class ForgetPwd2Activity extends BaseActivity {
                     String msg=jsonObject.getString("msg");
                     switch (code){
                         case "1000":
-                            MyUtils.showToast(ForgetPwd2Activity.this,"重置密码成功");
+                            MyUtils.showToast(Register2Activity.this,"注册成功");
                             finish();
                             break;
                         default:
-                            MyUtils.showToast(ForgetPwd2Activity.this,msg);
+                            MyUtils.showToast(Register2Activity.this,msg);
                             break;
                     }
                 } catch (JSONException e) {
                     MyUtils.dismssDialog();
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 MyUtils.dismssDialog();
-                MyUtils.showToast(ForgetPwd2Activity.this,"网络有问题");
+                MyUtils.showToast(Register2Activity.this,"网络有问题");
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map=new HashMap<>();
                 map.put("tel",phone);
-                map.put("password",etForgetpwd2Pwd1.getText().toString().trim());
+                map.put("password",pwd);
+                map.put("weight",etRegWeight.getText().toString().trim());
+                map.put("height",etRegHeight.getText().toString().trim());
                 return map;
             }
         };
