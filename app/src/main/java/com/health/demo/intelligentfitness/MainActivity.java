@@ -1,29 +1,44 @@
 package com.health.demo.intelligentfitness;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.health.demo.intelligentfitness.fragment.EvaluateFragment;
 import com.health.demo.intelligentfitness.fragment.HealthFragment;
 import com.health.demo.intelligentfitness.fragment.HomeFragment;
 import com.health.demo.intelligentfitness.fragment.PersionFragment;
 import com.health.demo.intelligentfitness.fragment.PlanFragment;
+import com.health.demo.intelligentfitness.util.MySharedPrefrencesUtil;
 import com.health.demo.intelligentfitness.util.MyUtils;
-import com.health.demo.intelligentfitness.util.photo.PictureMenu;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -37,20 +52,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout rl_evaluate_persional;
     private TextView tv_first;
     private ImageView iv_drawerlayout_header;
-    private PictureMenu mPhotoMenu;
+    private TextView tv_drawerlayout_name;
+    private int IMAGE_PICKER = 0x11;
+    private int REQUEST_CODE_SELECT = 0x12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPhotoMenu = new PictureMenu();
         initViews();
         setSupportActionBar(tl_custom);
         getSupportActionBar().setHomeButtonEnabled(true);//设置返回键可用
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //创建返回键，并实现打开/关闭监听
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, tl_custom, R.string.drawer_open, R.string.drawer_close) {
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -66,16 +81,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         //默认第一次进入首页
-        FragmentManager fragmentManager4=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction4=fragmentManager4.beginTransaction();
-        HomeFragment homeFragment=new HomeFragment();
-        fragmentTransaction4.replace(R.id.fl_drawerlayout_layout,homeFragment).commit();
+        FragmentManager fragmentManager4 = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction4 = fragmentManager4.beginTransaction();
+        HomeFragment homeFragment = new HomeFragment();
+        fragmentTransaction4.replace(R.id.fl_drawerlayout_layout, homeFragment).commit();
     }
 
     private void initViews() {
         tl_custom = (Toolbar) findViewById(R.id.tl_custom);
         tl_custom.setTitle("智能健身");
-        tv_first=(TextView)findViewById(R.id.tv_first);
+        tv_first = (TextView) findViewById(R.id.tv_first);
         tv_first.setOnClickListener(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
         fl_drawerlayout_layout = (FrameLayout) findViewById(R.id.fl_drawerlayout_layout);
@@ -83,12 +98,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         rl_drawerlayout_plan = (RelativeLayout) findViewById(R.id.rl_drawerlayout_plan);
         rl_drawerlayout_evaluate = (RelativeLayout) findViewById(R.id.rl_drawerlayout_evaluate);
         rl_evaluate_persional = (RelativeLayout) findViewById(R.id.rl_evaluate_persional);
-        iv_drawerlayout_header=(ImageView)findViewById(R.id.iv_drawerlayout_header);
+        iv_drawerlayout_header = (ImageView) findViewById(R.id.iv_drawerlayout_header);
+        tv_drawerlayout_name=(TextView)findViewById(R.id.tv_drawerlayout_name);
         iv_drawerlayout_header.setOnClickListener(this);
         rl_drawerlayout_health.setOnClickListener(this);
         rl_drawerlayout_plan.setOnClickListener(this);
         rl_drawerlayout_evaluate.setOnClickListener(this);
         rl_evaluate_persional.setOnClickListener(this);
+        if(!TextUtils.isEmpty((String) MySharedPrefrencesUtil.getParam(MainActivity.this,"path",""))){
+            Picasso.with(MainActivity.this).load(new File((String) MySharedPrefrencesUtil.getParam(MainActivity.this,"path",""))).error(R.mipmap.default_image).into(iv_drawerlayout_header);
+        }
     }
 
     @Override
@@ -124,23 +143,66 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tv_first:
                 mDrawerLayout.closeDrawers();
-                FragmentManager fragmentManager4=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction4=fragmentManager4.beginTransaction();
-                HomeFragment homeFragment=new HomeFragment();
-                fragmentTransaction4.replace(R.id.fl_drawerlayout_layout,homeFragment).commit();
+                FragmentManager fragmentManager4 = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction4 = fragmentManager4.beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction4.replace(R.id.fl_drawerlayout_layout, homeFragment).commit();
                 break;
             case R.id.iv_drawerlayout_header:
-//                mPhotoMenu.show(getSupportFragmentManager(), "PersonActivity");
-                MediaUtil.doPickPhotoAction(MainActivity.this);
+                showDialog();
                 break;
         }
 
     }
-    // 用来计算返回键的点击间隔时间
-    private long exitTime = 0;
 
     /**
+     * 拍照，相册dialog
+     */
+    public void showDialog() {
+        final Dialog dialog = new Dialog(this, R.style.common_dialog);
+
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.picture_menu, null);
+        Button btn_camera = (Button) view.findViewById(R.id.btn_camera);
+        Button btn_gallery = (Button) view.findViewById(R.id.btn_gallery);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ImageGridActivity.class);
+                intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                startActivityForResult(intent, IMAGE_PICKER);
+                dialog.dismiss();
+            }
+        });
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ImageGridActivity.class);
+                startActivityForResult(intent, IMAGE_PICKER);
+                dialog.dismiss();
+            }
+        });
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        //设置dialog的显示位置
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        dialog.show();
+    }
+    // 用来计算返回键的点击间隔时间
+    private long exitTime = 0;
+    /**
      * 按两次退出应用
+     *
      * @param keyCode
      * @param event
      * @return
@@ -158,35 +220,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data!=null){
-            switch (requestCode){
-                case MediaUtil.SELECT_PHOTO_CODE:// 相册
-                case MediaUtil.CAMERA_REQUEST_CODE:// 相机
-                    MyUtils.Loge("aaa","data111="+data.toString());
-                    MediaUtil.doCropPhoto(MainActivity.this,data);
-                    break;
-                case MediaUtil.PHOTO_CROP:// 剪裁
-//                    iv_head.setImageURI(data.getData());
-//                    SettingActivity.setHeadImg(data);
-//                    MyUtils.Loge(TAG,"data2="+data.toString());
-                    try {
-                        MyUtils.Loge("aaa","FilePath="+MediaUtil.getRealFilePath(
-                                MainActivity.this, data.getData()));
-                        File iconFile = new File(MediaUtil.getRealFilePath(
-                                MainActivity.this, data.getData()));
-//                        postIcon(iconFile,data);
-                        Picasso.with(MainActivity.this).load(iconFile).error(R.drawable.vector_drawable_header).into(iv_drawerlayout_header);
-                    } catch (Exception e) {
-                        MyUtils.Loge("aaa", "上传头像异常：" + e);
-                    }
-                    break;
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {//REQUEST_CODE_SELECT
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+//                Toast.makeText(this, "images.path:" + images.get(0).path, Toast.LENGTH_SHORT).show();
+                Picasso.with(MainActivity.this).load(new File(images.get(0).path)).error(R.mipmap.default_image).into(iv_drawerlayout_header);
+                MySharedPrefrencesUtil.setParam(MainActivity.this,"path",images.get(0).path);
+            } else {
+                Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 }
