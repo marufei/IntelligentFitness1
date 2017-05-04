@@ -38,7 +38,9 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -60,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String currentDate = (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());//获取当前时间
         initViews();
         setSupportActionBar(tl_custom);
         getSupportActionBar().setHomeButtonEnabled(true);//设置返回键可用
@@ -99,15 +102,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         rl_drawerlayout_evaluate = (RelativeLayout) findViewById(R.id.rl_drawerlayout_evaluate);
         rl_evaluate_persional = (RelativeLayout) findViewById(R.id.rl_evaluate_persional);
         iv_drawerlayout_header = (ImageView) findViewById(R.id.iv_drawerlayout_header);
-        tv_drawerlayout_name=(TextView)findViewById(R.id.tv_drawerlayout_name);
+        tv_drawerlayout_name = (TextView) findViewById(R.id.tv_drawerlayout_name);
         iv_drawerlayout_header.setOnClickListener(this);
         rl_drawerlayout_health.setOnClickListener(this);
         rl_drawerlayout_plan.setOnClickListener(this);
         rl_drawerlayout_evaluate.setOnClickListener(this);
         rl_evaluate_persional.setOnClickListener(this);
-        if(!TextUtils.isEmpty((String) MySharedPrefrencesUtil.getParam(MainActivity.this,"path",""))){
-            Picasso.with(MainActivity.this).load(new File((String) MySharedPrefrencesUtil.getParam(MainActivity.this,"path",""))).error(R.mipmap.default_image).into(iv_drawerlayout_header);
+        if (!TextUtils.isEmpty((String) MySharedPrefrencesUtil.getParam(MainActivity.this, "path", ""))) {
+            Picasso.with(MainActivity.this).load(new File((String) MySharedPrefrencesUtil.getParam(MainActivity.this, "path", ""))).error(R.mipmap.default_image).into(iv_drawerlayout_header);
         }
+        tv_drawerlayout_name.setText((String) MySharedPrefrencesUtil.getParam(MainActivity.this, "name", ""));
     }
 
     @Override
@@ -198,8 +202,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         window.setAttributes(params);
         dialog.show();
     }
+
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
+
     /**
      * 按两次退出应用
      *
@@ -231,7 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
 //                Toast.makeText(this, "images.path:" + images.get(0).path, Toast.LENGTH_SHORT).show();
                 Picasso.with(MainActivity.this).load(new File(images.get(0).path)).error(R.mipmap.default_image).into(iv_drawerlayout_header);
-                MySharedPrefrencesUtil.setParam(MainActivity.this,"path",images.get(0).path);
+                MySharedPrefrencesUtil.setParam(MainActivity.this, "path", images.get(0).path);
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }

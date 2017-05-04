@@ -62,6 +62,7 @@ public class EditNameActivity extends BaseActivity {
                     switch (code){
                         case "1000":
                             MyUtils.showToast(EditNameActivity.this,"修改成功");
+                            MySharedPrefrencesUtil.setParam(EditNameActivity.this,"name",etEditNameEdit.getText().toString().trim());
                             finish();
                             break;
                         case "6001":

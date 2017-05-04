@@ -142,6 +142,7 @@ public class PersionFragment extends Fragment {
                             tvInfoName.setText(name);
                             tvInfoPhone.setText(tel);
                             tvInfoWeight.setText(weight+"kg");
+                            MySharedPrefrencesUtil.setParam(getActivity(),"name",name);
                             break;
                         case "6001":
                         case "6002":

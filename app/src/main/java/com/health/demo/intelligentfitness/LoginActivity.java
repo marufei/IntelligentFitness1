@@ -70,7 +70,6 @@ public class LoginActivity extends BaseActivity{
     private void login() {
         MyUtils.showDialog(this,"登录中...");
         String url= ApiAddress.getURL(ApiAddress.LOGIN);
-//        VolleyUtils.RequestPost(LoginActivity.this,url,"login",map,volleyListenerInterface);
         StringRequest stringRequest=new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

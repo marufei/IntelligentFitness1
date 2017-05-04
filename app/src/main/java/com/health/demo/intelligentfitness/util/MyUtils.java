@@ -651,7 +651,6 @@ public class MyUtils {
      * @param msg
      */
     public static void showDialog(Context mContext, String msg) {
-//        Loge(TAG,"showDialog----"+msg);
         aDialog = new ShapeLoadingDialog(mContext);
         aDialog.setLoadingText(msg);
         aDialog.setCanceledOnTouchOutside(false);
@@ -660,8 +659,10 @@ public class MyUtils {
         }
     }
 
+    /**
+     * 关闭上抛动画
+     */
     public static void dismssDialog() {
-//        Loge(TAG,"dismssDialog----");
         if (aDialog != null && aDialog.isShowing()) {
             aDialog.dismiss();
             aDialog = null;
